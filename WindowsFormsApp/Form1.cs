@@ -20,7 +20,7 @@ namespace WindowsFormsApp
         private void Form1_Load(object sender, EventArgs e)
         {
             DataTable dt = new DataTable();
-            
+            string s = "hello world";
         }
     }
 }
