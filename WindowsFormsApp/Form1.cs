@@ -10,27 +10,30 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp
 {
-    public partial class Form1 : Form
+    public partial class LoginForm : Form
     {
-        public Form1()
+        public LoginForm()
         {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            DataTable dt = new DataTable();
-            string s = "hello world";
-        }
-
-        private void Form1_Load_1(object sender, EventArgs e)
+        private void LoginForm_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnLogin_Click(object sender, EventArgs e)
         {
-            this.Close();
+            if (textBox1.Text == "admin" && textBox2.Text == "admin")
+            {
+                this.Hide();
+                Form2 f = new Form2();
+                f.Show();
+            }
+            else
+            {
+                MessageBox.Show("Wrong credential contact your administrator");
+            }
         }
     }
 }
