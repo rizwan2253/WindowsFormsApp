@@ -19,7 +19,7 @@ namespace WindowsFormsApp
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-
+           
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -27,13 +27,25 @@ namespace WindowsFormsApp
             if (textBox1.Text == "admin" && textBox2.Text == "admin")
             {
                 this.Hide();
-                Form2 f = new Form2();
+                
+                Dashboard f = new Dashboard();
                 f.Show();
             }
             else
             {
                 MessageBox.Show("Wrong credential contact your administrator");
             }
+        }
+
+        public  void show1()
+        {
+            this.Show();
+          
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {            
+            Application.Exit();
         }
     }
 }

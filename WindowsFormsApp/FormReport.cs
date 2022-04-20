@@ -10,21 +10,11 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp
 {
-    public partial class Form2 : Form
+    public partial class FormReport : Form
     {
-        public Form2()
+        public FormReport()
         {
             InitializeComponent();
-        }
-
-        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
-        {            
-            this.Close();
-        }
-
-        private void ClosingMainForm(object sender, FormClosingEventArgs e)
-        {
-
         }
     }
 }
