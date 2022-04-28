@@ -105,8 +105,6 @@ namespace WindowsFormsApp
 
         private void buttonSavePrint_Click(object sender, EventArgs e)
         {
-            //FormReport formReport = new FormReport();
-            //formReport.ShowDialog();
             printPreviewDialog.Document = printDocument;
             printDocument.DefaultPageSettings.PaperSize = new System.Drawing.Printing.PaperSize("pprnm", 285, 600);
             printPreviewDialog.Show();
@@ -120,7 +118,6 @@ namespace WindowsFormsApp
             e.Graphics.DrawString("Mobile No. :032145654",new Font("Arial",8,FontStyle.Regular),Brushes.Black,new Point(10,115));
             e.Graphics.DrawString("Date : "+DateTime.Now,new Font("Arial",8, FontStyle.Regular),Brushes.Black,new Point(10,130));
             e.Graphics.DrawString("__________________________________________", new Font("Arial",8, FontStyle.Regular),Brushes.Black,new Point(5,135));
-            //e.Graphics.DrawString("S.No Name\t\t\tQuantity   Price", new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(10, 150));
             e.Graphics.DrawString("S.No", new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(10, 150));
             e.Graphics.DrawString("Name", new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(40, 150));
             e.Graphics.DrawString("Quantity", new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(190, 150));
@@ -129,7 +126,6 @@ namespace WindowsFormsApp
             foreach (var item in productItems)
             {
                 i += 15;
-                //e.Graphics.DrawString(string.Format(" " + 1 + "\t" + item.Name + "\t\t\t" + item.Quantity + "\t" + item.SalePrice), new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(10, 155 + i));
                 e.Graphics.DrawString("1", new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(10, i+152));
                 e.Graphics.DrawString(item.Name, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(40, i+152));
                 e.Graphics.DrawString(item.Quantity.ToString(), new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(195, i+152));

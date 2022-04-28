@@ -7,50 +7,33 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp
 {
-    public class ManageStockLayer
+    public class ManageStockLayer : DataBaseAccess
     {
-        public static List<Category> GetCategories()
+        public static List<Category> GetCategoryList(string id)
         {
-
-            List<Category> catList = new List<Category>();
-
-            DataTable dt = new DataTable("Category");
-            dt.Columns.Add("Id", typeof(Int32));
-            dt.Columns.Add("Name", typeof(string));
-             
-            dt.Rows.Add(1, "Electronic");
-            dt.Rows.Add(2, "Sports");
-
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                Category cat = new Category();
-                cat.Id = Convert.ToInt32(dt.Rows[i]["Id"]);
-                cat.Name = dt.Rows[i]["Name"].ToString();                
-                catList.Add(cat);
-            }  
-            return catList;
+            return GetCategories(id);
         }
 
-        public static List<Manufacturer> GetManufacturer()
+        public static int AddCategory(string name)
         {
+            return InsertCategory(name);
+        }
+        public static int EditCategory(int id,string name, int status)
+        {
+            return UpdateCategory(id,name,status);
+        }
+        public static List<Manufacturer> GetManufacturerList(string id)
+        {
+            return GetManufacturer(id);
+        }
 
-            List<Manufacturer> Manufact = new List<Manufacturer>();
-
-            DataTable dt = new DataTable("Manufacturer");
-            dt.Columns.Add("Id", typeof(Int32));
-            dt.Columns.Add("Name", typeof(string));
-
-            dt.Rows.Add(1, "Hilal");
-            dt.Rows.Add(2, "English");
-
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                Manufacturer cat = new Manufacturer();
-                cat.Id = Convert.ToInt32(dt.Rows[i]["Id"]);
-                cat.Name = dt.Rows[i]["Name"].ToString();
-                Manufact.Add(cat);
-            }
-            return Manufact;
+        public static int AddManufacturer(string name)
+        {
+            return InsertManufacturer(name);
+        }
+        public static int EditManufacturer(int id, string name, int status)
+        {
+            return UpdateManufacturer(id, name, status);
         }
 
         public static List<ProductItem> GetProductItems()
@@ -66,8 +49,8 @@ namespace WindowsFormsApp
             dt.Columns.Add("CategoryName", typeof(string));
             dt.Columns.Add("ManufacturerName", typeof(string));
 
-            dt.Rows.Add(1, "Dingdong","a123",50,40,"Electronic","Hilal");
-            dt.Rows.Add(2, "Nimco","a124",10,20, "Sport", "English");
+            dt.Rows.Add(1, "Dingdong", "a123", 50, 40, "Electronic", "Hilal");
+            dt.Rows.Add(2, "Nimco", "a124", 10, 20, "Sport", "English");
             dt.Rows.Add(3, "Tuc", "a125", 30, 25, "Electronic", "Hilal");
             dt.Rows.Add(4, "Bat", "a126", 100, 200, "Sport", "English");
 
@@ -85,26 +68,22 @@ namespace WindowsFormsApp
             }
             return productItems;
         }
-        List<Manufacturer> man = new List<Manufacturer>();
+    
 
-        List<Category> a = new List<Category>();
-        
-
+        public static void insert(string param, string name, int type)
+        {
+            Insert(param, name, type);
+        }
     }
 
-    public class Category
+    public class Category : DataBaseAccess
     {
         public List<Category> cat { get; set; }
-
-        public int Id { get; set; }
-        public string Name { get; set; }
     }
 
-    public class ProductItem
+    public class ProductItem : DataBaseAccess
     {
         public string Barcode { get; set; }
-        public int Id { get; set; }
-        public string Name { get; set; }
         public int SalePrice { get; set; }
         public int Quantity { get; set; }
         public int CostPrice { get; set; }
@@ -114,11 +93,8 @@ namespace WindowsFormsApp
         public List<Manufacturer> man { get; set; }
     }
 
-    public class Manufacturer
+    public class Manufacturer : DataBaseAccess
     {
-        public List<Manufacturer> man { get; set; }
-
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public List<Manufacturer> man  { get; set; }
     }
 }

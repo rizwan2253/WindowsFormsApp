@@ -46,17 +46,18 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.CatAndManuf = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.txtboxCategory = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.label9 = new System.Windows.Forms.Label();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.btnEdit = new System.Windows.Forms.Button();
+            this.txtboxManufacturer = new System.Windows.Forms.TextBox();
+            this.btnUpdate = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.dtProductItem = new System.Windows.Forms.DataGridView();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.txtSearchId = new System.Windows.Forms.TextBox();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.btnSearch = new System.Windows.Forms.Button();
             this.tabManageStock.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -235,7 +236,7 @@
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.textBox4);
+            this.tabPage3.Controls.Add(this.txtboxCategory);
             this.tabPage3.Controls.Add(this.label6);
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
@@ -245,12 +246,12 @@
             this.tabPage3.Text = "Category";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // textBox4
+            // txtboxCategory
             // 
-            this.textBox4.Location = new System.Drawing.Point(149, 15);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 20);
-            this.textBox4.TabIndex = 1;
+            this.txtboxCategory.Location = new System.Drawing.Point(149, 15);
+            this.txtboxCategory.Name = "txtboxCategory";
+            this.txtboxCategory.Size = new System.Drawing.Size(100, 20);
+            this.txtboxCategory.TabIndex = 1;
             // 
             // label6
             // 
@@ -264,7 +265,7 @@
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.label9);
-            this.tabPage4.Controls.Add(this.textBox7);
+            this.tabPage4.Controls.Add(this.txtboxManufacturer);
             this.tabPage4.Location = new System.Drawing.Point(4, 25);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -282,25 +283,26 @@
             this.label9.TabIndex = 4;
             this.label9.Text = "Enter New Manufacturer";
             // 
-            // textBox7
+            // txtboxManufacturer
             // 
-            this.textBox7.Location = new System.Drawing.Point(149, 15);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(100, 20);
-            this.textBox7.TabIndex = 5;
+            this.txtboxManufacturer.Location = new System.Drawing.Point(149, 15);
+            this.txtboxManufacturer.Name = "txtboxManufacturer";
+            this.txtboxManufacturer.Size = new System.Drawing.Size(100, 20);
+            this.txtboxManufacturer.TabIndex = 5;
             // 
-            // btnEdit
+            // btnUpdate
             // 
-            this.btnEdit.Location = new System.Drawing.Point(291, 290);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(75, 23);
-            this.btnEdit.TabIndex = 11;
-            this.btnEdit.Text = "Edit";
-            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnUpdate.Location = new System.Drawing.Point(301, 290);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(75, 23);
+            this.btnUpdate.TabIndex = 11;
+            this.btnUpdate.Text = "Update";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(204, 290);
+            this.btnAdd.Location = new System.Drawing.Point(217, 290);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 10;
@@ -327,31 +329,47 @@
             this.label7.TabIndex = 2;
             this.label7.Text = "Search ID";
             // 
-            // textBox6
+            // txtSearchId
             // 
-            this.textBox6.Location = new System.Drawing.Point(93, 292);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(100, 20);
-            this.textBox6.TabIndex = 3;
+            this.txtSearchId.Location = new System.Drawing.Point(80, 290);
+            this.txtSearchId.Name = "txtSearchId";
+            this.txtSearchId.Size = new System.Drawing.Size(64, 20);
+            this.txtSearchId.TabIndex = 3;
+            this.txtSearchId.TextChanged += new System.EventHandler(this.txtSearchId_TextChanged);
+            this.txtSearchId.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearchId_KeyDown);
+            this.txtSearchId.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSearchId_KeyPress);
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(381, 290);
+            this.btnDelete.Location = new System.Drawing.Point(388, 290);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 14;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSearch.Location = new System.Drawing.Point(153, 290);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(58, 23);
+            this.btnSearch.TabIndex = 14;
+            this.btnSearch.Text = "Search";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // ManageStock
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(481, 483);
+            this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.textBox6);
+            this.Controls.Add(this.txtSearchId);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.btnEdit);
+            this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.dtProductItem);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.tabManageStock);
@@ -380,7 +398,7 @@
         private System.Windows.Forms.TabControl tabManageStock;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Button btnEdit;
+        private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox comboBoxManufacturer;
@@ -392,19 +410,20 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBoxCategory;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox txtboxCategory;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.DataGridView dtProductItem;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox txtSearchId;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TabControl CatAndManuf;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox txtboxManufacturer;
+        private System.Windows.Forms.Button btnSearch;
     }
 }

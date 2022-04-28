@@ -37,6 +37,7 @@
       <HintPath>..\packages\Microsoft.ReportViewer.WinForms.10.0.40219.1\lib\Microsoft.ReportViewer.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml.Linq" />
@@ -69,12 +70,8 @@
     <Compile Include="CustomerHistory.Designer.cs">
       <DependentUpon>CustomerHistory.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormReport.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormReport.Designer.cs">
-      <DependentUpon>FormReport.cs</DependentUpon>
-    </Compile>
+    <Compile Include="DataBaseAccess.cs" />
+    <Compile Include="DataLayer.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,9 +101,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CustomerHistory.resx">
       <DependentUpon>CustomerHistory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormReport.resx">
-      <DependentUpon>FormReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
