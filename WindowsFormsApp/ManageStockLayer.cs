@@ -9,33 +9,81 @@ namespace WindowsFormsApp
 {
     public class ManageStockLayer : DataBaseAccess
     {
+        #region Category
         public static List<Category> GetCategoryList(string id)
         {
-            return GetCategories(id);
+            DataTable dt = Get(id,1);
+            List<Category> catList = new List<Category>();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Category cat = new Category();
+                cat.Id = Convert.ToInt32(dt.Rows[i]["Id"]);
+                cat.Name = dt.Rows[i]["Name"].ToString();
+                catList.Add(cat);
+            }
+            return catList;
         }
 
         public static int AddCategory(string name)
         {
-            return InsertCategory(name);
+            return Add(name,2);
         }
-        public static int EditCategory(int id,string name, int status)
+        public static int EditCategory(int id,string name)
         {
-            return UpdateCategory(id,name,status);
+            return Update(id,name,3);
         }
+        public static int RemoveCategory(int id)
+        {
+            return Delete(id,4);
+        }
+        #endregion
+
+        #region Manufacturer
         public static List<Manufacturer> GetManufacturerList(string id)
         {
-            return GetManufacturer(id);
+            DataTable dt = Get(id,5);
+            List<Manufacturer> catList = new List<Manufacturer>();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Manufacturer cat = new Manufacturer();
+                cat.Id = Convert.ToInt32(dt.Rows[i]["Id"]);
+                cat.Name = dt.Rows[i]["Name"].ToString();
+                catList.Add(cat);
+            }
+            return catList;
         }
 
         public static int AddManufacturer(string name)
         {
-            return InsertManufacturer(name);
+            return Add(name,6);
         }
-        public static int EditManufacturer(int id, string name, int status)
+        public static int EditManufacturer(int id, string name)
         {
-            return UpdateManufacturer(id, name, status);
+            return Update(id, name,7);
+        }
+        public static int RemoveManufacturer(int id)
+        {
+            return Delete(id,8);
+        }
+        #endregion
+
+        #region Product
+        public static int AddProduct(ProductItem productItem)
+        {
+            return Add(productItem,10);
+        }
+        public static int EditProduct(ProductItem productItem)
+        {
+            return Update(productItem,11);
         }
 
+        public static int RemoveProduct(int id)
+        {
+            return Delete(id, 11);
+        }
+        #endregion
         public static List<ProductItem> GetProductItems()
         {
             List<ProductItem> productItems = new List<ProductItem>();
@@ -68,7 +116,27 @@ namespace WindowsFormsApp
             }
             return productItems;
         }
-    
+
+        public static List<ProductItem> GetProductItems(string id)
+        {
+            DataTable dt = Get(id, 9);
+            List<ProductItem> productItems = new List<ProductItem>();           
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                ProductItem productItem = new ProductItem();
+                productItem.Id = Convert.ToInt32(dt.Rows[i]["Id"]);
+                productItem.Name = dt.Rows[i]["Name"].ToString();
+                productItem.Barcode = dt.Rows[i]["Barcode"].ToString();
+                productItem.SalePrice = Convert.ToInt32(dt.Rows[i]["SalePrice"]);
+                productItem.CostPrice = Convert.ToInt32(dt.Rows[i]["CostPrice"]);
+                productItem.categoryName = dt.Rows[i]["CategoryName"].ToString();
+                productItem.ManufacturerName = dt.Rows[i]["ManufacturerName"].ToString();
+                productItems.Add(productItem);
+            }
+            return productItems;
+        }
+
 
         public static void insert(string param, string name, int type)
         {
@@ -84,11 +152,14 @@ namespace WindowsFormsApp
     public class ProductItem : DataBaseAccess
     {
         public string Barcode { get; set; }
+        public int Status { get; set; }
         public int SalePrice { get; set; }
         public int Quantity { get; set; }
         public int CostPrice { get; set; }
         public string categoryName { get; set; }
+        public int categoryId { get; set; }
         public string ManufacturerName { get; set; }
+        public int ManufacturerId { get; set; }
         public List<Category> cat { get; set; }
         public List<Manufacturer> man { get; set; }
     }

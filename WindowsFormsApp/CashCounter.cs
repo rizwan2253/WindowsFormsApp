@@ -14,7 +14,7 @@ namespace WindowsFormsApp
     {
         ProductItem selectedItem = null;
         List<ProductItem> productItems = new List<ProductItem>();
-        List<ProductItem> products = ManageStockLayer.GetProductItems();
+        List<ProductItem> products = ManageStockLayer.GetProductItems("0");
         public CashCounter()
         {
             InitializeComponent();

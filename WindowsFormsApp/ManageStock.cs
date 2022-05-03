@@ -21,7 +21,7 @@ namespace WindowsFormsApp
 
         private void FillProductItem()
         {
-            dtProductItem.DataSource = ManageStockLayer.GetProductItems();
+            dtProductItem.DataSource = ManageStockLayer.GetProductItems("0");
         }
         private void fillCategory()
         {
@@ -41,7 +41,19 @@ namespace WindowsFormsApp
         {
             if (tabManageStock.SelectedIndex == 0)
             {
-                
+                if (isValidate())
+                {
+                    var manufactId = comboBoxCategory.SelectedItem as Category;
+                    var categoryId = comboBoxManufacturer.SelectedItem as Manufacturer;
+                    ProductItem item = new ProductItem();
+                    item.Name = txtProductName.Text;
+                    item.Barcode = string.IsNullOrEmpty(txtBarcode.Text)?"": txtBarcode.Text;
+                    item.CostPrice = Convert.ToInt32(txtCostPrice.Text);
+                    item.SalePrice = Convert.ToInt32(txtSalePrice.Text);
+                    item.ManufacturerId = manufactId.Id;
+                    item.categoryId = categoryId.Id;
+                    Message(ManageStockLayer.AddProduct(item), "added");
+                }
             }
             else if (tabManageStock.SelectedIndex == 1)
             {
@@ -54,7 +66,28 @@ namespace WindowsFormsApp
                   Message(ManageStockLayer.AddManufacturer(txtboxManufacturer.Text),"added");
                 }
             }
-        }        
+        }
+
+        private bool isValidate()
+        {
+            if (string.IsNullOrEmpty(txtProductName.Text))
+            {
+                MessageBox.Show("Enter product name");
+                return false;
+            }
+            if (string.IsNullOrEmpty(txtCostPrice.Text))
+            {
+                MessageBox.Show("Enter Cost Price");
+                return false;
+            }
+            if (string.IsNullOrEmpty(txtSalePrice.Text))
+            {
+                MessageBox.Show("Enter Sale Price");
+                return false;
+            }
+
+            return true;
+        }
 
         private void ManageStockTabSelect(object sender, TabControlEventArgs e)
         {
@@ -84,17 +117,31 @@ namespace WindowsFormsApp
         {
             if (tabManageStock.SelectedIndex == 0)
             {
+                if (isValidate())
+                {
+                    var manufactId = comboBoxCategory.SelectedItem as Category;
+                    var categoryId = comboBoxManufacturer.SelectedItem as Manufacturer;
+                    ProductItem item = new ProductItem();
+                    item.Name = txtProductName.Text;
+                    item.Status = 1;
+                    item.Barcode = string.IsNullOrEmpty(txtBarcode.Text) ? "" : txtBarcode.Text;
+                    item.CostPrice = Convert.ToInt32(txtCostPrice.Text);
+                    item.SalePrice = Convert.ToInt32(txtSalePrice.Text);
+                    item.ManufacturerId = manufactId.Id;
+                    item.categoryId = categoryId.Id;
+                    Message(ManageStockLayer.EditProduct(item), "updated");
+                }
 
             }
             else if (tabManageStock.SelectedIndex == 1)
             {
                 if (CatAndManuf.SelectedIndex == 0)
                 {
-                    Message(ManageStockLayer.EditCategory(id,txtboxCategory.Text,1),"update");
+                    Message(ManageStockLayer.EditCategory(id,txtboxCategory.Text),"updated");
                 }
                 else if (CatAndManuf.SelectedIndex == 1)
                 {
-                    Message(ManageStockLayer.EditManufacturer(id,txtboxManufacturer.Text,1),"update");
+                    Message(ManageStockLayer.EditManufacturer(id,txtboxManufacturer.Text),"updated");
                 }
             }
         }
@@ -103,29 +150,34 @@ namespace WindowsFormsApp
         {
             if (tabManageStock.SelectedIndex == 0)
             {
-
+                Message(ManageStockLayer.RemoveProduct(1), "deleted");
             }
             else if (tabManageStock.SelectedIndex == 1)
             {
                 if (CatAndManuf.SelectedIndex == 0)
                 {
-                    Message(ManageStockLayer.EditCategory(1, txtboxCategory.Text, 0), "deleted");
+                    Message(ManageStockLayer.RemoveCategory(1), "deleted");
+                    
                 }
                 else if (CatAndManuf.SelectedIndex == 1)
                 {
-                    Message(ManageStockLayer.EditManufacturer(1, txtboxManufacturer.Text, 0), "deleted");
+                    Message(ManageStockLayer.RemoveManufacturer(1), "deleted");
                 }
             }
         }
 
         private void txtSearchId_KeyDown(object sender, KeyEventArgs e)
         {
-            txtSearchId.SelectAll();
+           // txtSearchId.SelectAll();
         }
 
         private void txtSearchId_KeyPress(object sender, KeyPressEventArgs e)
         {
-            e.Handled = !char.IsDigit(e.KeyChar);            
+            //e.Handled = !char.IsDigit(e.KeyChar) || e.KeyChar != 8;
+            if (!(char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back))
+            {
+                e.Handled = true;
+            }
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -133,6 +185,7 @@ namespace WindowsFormsApp
             
             if (tabManageStock.SelectedIndex == 0)
             {
+                var val = ManageStockLayer.GetProductItems(txtSearchId.Text);
 
             }
             else if (tabManageStock.SelectedIndex == 1)
@@ -168,12 +221,13 @@ namespace WindowsFormsApp
 
         private void txtSearchId_TextChanged(object sender, EventArgs e)
         {
-            txtSearchId.SelectAll();
-            btnSearch.Focus();
+            //txtSearchId.SelectAll();
+            //btnSearch.Focus();
         }
 
         private void Message(int isAdded,string status)
         {
+            
             if (isAdded > 0)
             {
                 MessageBox.Show("Data "+status+" successfully", "Success");
@@ -181,6 +235,22 @@ namespace WindowsFormsApp
             else
             {
                 MessageBox.Show("Something Wrong", "Failed");
+            }
+        }
+
+        private void txtCostPrice_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!(char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void txtSalePrice_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!(char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back))
+            {
+                e.Handled = true;
             }
         }
     }
