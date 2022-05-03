@@ -135,13 +135,7 @@ namespace WindowsFormsApp
                 productItems.Add(productItem);
             }
             return productItems;
-        }
-
-
-        public static void insert(string param, string name, int type)
-        {
-            Insert(param, name, type);
-        }
+        }       
     }
 
     public class Category : DataBaseAccess

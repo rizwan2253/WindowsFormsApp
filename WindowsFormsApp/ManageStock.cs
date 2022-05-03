@@ -200,7 +200,7 @@ namespace WindowsFormsApp
                 }
                 else if (CatAndManuf.SelectedIndex == 1)
                 {
-                    var val = ManageStockLayer.GetManufacturer(txtSearchId.Text);
+                    var val = ManageStockLayer.GetManufacturerList(txtSearchId.Text);
                     if (val != null && val.Count > 0)
                     {
                         dtProductItem.DataSource = val;
