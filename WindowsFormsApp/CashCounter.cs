@@ -22,6 +22,7 @@ namespace WindowsFormsApp
 
         private void CashCounter_Load(object sender, EventArgs e)
         {
+            txtBoxCustomerId.Text = CashCounterLayer.GetCustomerId().ToString();            
             fillItems();
             dataGridViewItemsDetail.DataSource = products;
             ClearFields();
@@ -70,7 +71,10 @@ namespace WindowsFormsApp
             dataGridViewCustomer.DataSource = productItems;
             dataGridViewCustomer.Columns["CostPrice"].Visible = false;
             dataGridViewCustomer.Columns["Id"].Visible = false;
-            TotalAmount.Text = productItems.Sum(x => x.SalePrice).ToString();
+            dataGridViewCustomer.Columns["ManufacturerName"].Visible = false;
+            dataGridViewCustomer.Columns["categoryName"].Visible = false;
+            dataGridViewCustomer.Columns["Id"].Visible = false;
+            TotalAmount.Text ="Rs." + productItems.Sum(x => x.SalePrice).ToString();
             TotalQuantity.Text = productItems.Sum(x => x.Quantity).ToString();
             ClearFields();
         }
@@ -94,8 +98,7 @@ namespace WindowsFormsApp
         private void ClearFields()
         {
             comboBoxItems.SelectedIndex = -1;
-            comboBoxItems.Focus();
-           
+            comboBoxItems.Focus();           
             textBoxSalePrice.Text =
             textBoxBarcode.Text = "";
             textBoxManufacturer.Text = "";
@@ -105,6 +108,13 @@ namespace WindowsFormsApp
 
         private void buttonSavePrint_Click(object sender, EventArgs e)
         {
+
+            CashCounterModel cashCounter = new CashCounterModel();
+            var item = comboBoxItems.SelectedItem as ProductItem;
+            cashCounter.CustomerId = Convert.ToInt32(txtBoxCustomerId.Text);
+            cashCounter.Id = item.Id;
+            cashCounter.Quantity = Convert.ToInt32(textBoxQuantity.Text);
+            var a = CashCounterLayer.InsertCustomerDetail(cashCounter);
             printPreviewDialog.Document = printDocument;
             printDocument.DefaultPageSettings.PaperSize = new System.Drawing.Printing.PaperSize("pprnm", 285, 600);
             printPreviewDialog.Show();
@@ -137,6 +147,22 @@ namespace WindowsFormsApp
             e.Graphics.DrawString(productItems.Sum(x => x.SalePrice).ToString(), new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(240, i+175));
             e.Graphics.DrawString("__________________________________________", new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(5, i+180));
 
+        }
+
+        private void textBoxBarcode_TextChanged(object sender, EventArgs e)
+        {
+            selectedItem = comboBoxItems.SelectedItem as ProductItem;
+            var selectedList = products.Where(a => a.Barcode == textBoxBarcode.Text);
+            var m = ManageStockLayer.GetManufacturerList(selectedList.FirstOrDefault().ManufacturerId.ToString());
+            var c = ManageStockLayer.GetCategoryList(selectedList.FirstOrDefault().categoryId.ToString());
+            if (selectedItem != null)
+            {
+                textBoxSalePrice.Text = selectedItem.SalePrice.ToString();
+                textBoxManufacturer.Text = m.FirstOrDefault().Name;
+                textBoxCategory.Text = c.FirstOrDefault().Name;
+                comboBoxItems.SelectedItem = selectedList;
+                textBoxQuantity.Focus();
+            }
         }
     }
 }

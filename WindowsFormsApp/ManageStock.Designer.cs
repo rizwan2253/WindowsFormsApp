@@ -105,7 +105,6 @@
             // 
             this.txtBarcode.Location = new System.Drawing.Point(140, 106);
             this.txtBarcode.Name = "txtBarcode";
-            this.txtBarcode.ReadOnly = true;
             this.txtBarcode.Size = new System.Drawing.Size(100, 20);
             this.txtBarcode.TabIndex = 13;
             // 
@@ -319,7 +318,7 @@
             this.dtProductItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtProductItem.Location = new System.Drawing.Point(25, 321);
             this.dtProductItem.Name = "dtProductItem";
-            this.dtProductItem.Size = new System.Drawing.Size(442, 150);
+            this.dtProductItem.Size = new System.Drawing.Size(677, 150);
             this.dtProductItem.TabIndex = 1;
             // 
             // label7
@@ -366,7 +365,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(481, 483);
+            this.ClientSize = new System.Drawing.Size(714, 483);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.txtSearchId);

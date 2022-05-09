@@ -37,8 +37,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.txtBoxCustomerId = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBoxCategory = new System.Windows.Forms.TextBox();
             this.textBoxBarcode = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -67,9 +65,9 @@
             // dataGridViewItemsDetail
             // 
             this.dataGridViewItemsDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewItemsDetail.Location = new System.Drawing.Point(255, 39);
+            this.dataGridViewItemsDetail.Location = new System.Drawing.Point(255, 23);
             this.dataGridViewItemsDetail.Name = "dataGridViewItemsDetail";
-            this.dataGridViewItemsDetail.Size = new System.Drawing.Size(372, 140);
+            this.dataGridViewItemsDetail.Size = new System.Drawing.Size(372, 178);
             this.dataGridViewItemsDetail.TabIndex = 0;
             // 
             // dataGridViewCustomer
@@ -87,8 +85,6 @@
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.txtBoxCustomerId);
             this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.textBox4);
             this.groupBox1.Controls.Add(this.textBoxCategory);
             this.groupBox1.Controls.Add(this.textBoxBarcode);
             this.groupBox1.Controls.Add(this.label8);
@@ -109,9 +105,9 @@
             // 
             // btnAddDetail
             // 
-            this.btnAddDetail.Location = new System.Drawing.Point(129, 185);
+            this.btnAddDetail.Location = new System.Drawing.Point(129, 184);
             this.btnAddDetail.Name = "btnAddDetail";
-            this.btnAddDetail.Size = new System.Drawing.Size(97, 20);
+            this.btnAddDetail.Size = new System.Drawing.Size(97, 21);
             this.btnAddDetail.TabIndex = 31;
             this.btnAddDetail.Text = "Add Detail";
             this.btnAddDetail.UseVisualStyleBackColor = true;
@@ -151,22 +147,6 @@
             this.label11.TabIndex = 29;
             this.label11.Text = "Customer ID";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(252, 15);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(87, 13);
-            this.label4.TabIndex = 28;
-            this.label4.Text = "Enter to Search :";
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(345, 11);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(282, 20);
-            this.textBox4.TabIndex = 27;
-            // 
             // textBoxCategory
             // 
             this.textBoxCategory.Location = new System.Drawing.Point(79, 133);
@@ -181,6 +161,7 @@
             this.textBoxBarcode.Name = "textBoxBarcode";
             this.textBoxBarcode.Size = new System.Drawing.Size(147, 20);
             this.textBoxBarcode.TabIndex = 25;
+            this.textBoxBarcode.TextChanged += new System.EventHandler(this.textBoxBarcode_TextChanged);
             // 
             // label8
             // 
@@ -375,8 +356,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtBoxCustomerId;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBoxCategory;
         private System.Windows.Forms.ComboBox comboBoxItems;
         private System.Windows.Forms.Label label6;

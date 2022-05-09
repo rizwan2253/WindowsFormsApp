@@ -21,10 +21,10 @@ namespace WindowsFormsApp
 
         // get category , manufacturing and product
         #region category and manufacturing
-        public static DataTable Get(string param,int type)
+        protected static DataTable Get(string param,int type)
         {
             SqlDataAdapter da;
-            DataTable dt = new DataTable("Category");
+            DataTable dt = new DataTable();
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -41,12 +41,13 @@ namespace WindowsFormsApp
            
             return dt;
         }
-        public static int Add(string param,int type)
+        
+        protected static int Add(string param,int type)
         {
             var isAdded = 0;
             try
             {
-                DataTable dt = new DataTable("Category");
+                DataTable dt = new DataTable();
                 
                 using (SqlConnection conn = new SqlConnection(connString))
                 {
@@ -66,7 +67,7 @@ namespace WindowsFormsApp
             }
                 return isAdded;
         }
-        public static int Add(ProductItem param, int type)
+        protected static int Add(ProductItem param, int type)
         {
             var isAdded = 0;
             try
@@ -95,7 +96,32 @@ namespace WindowsFormsApp
             }
             return isAdded;
         }
-        public static int Update(int id,string param,int type)
+        protected static int Add(CashCounterModel param, int type)
+        {
+            var isAdded = 0;
+            try
+            {
+
+                using (SqlConnection conn = new SqlConnection(connString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("storeProcedure", conn))
+                    {
+                        conn.Open();
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@CustomerId", param.CustomerId);
+                        cmd.Parameters.AddWithValue("@Quantity", param.Quantity);
+                        cmd.Parameters.AddWithValue("@Type", type);
+                        isAdded = cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+            return isAdded;
+        }
+        protected static int Update(int id,string param,int type)
         {
             var isAdded = 0;
             try
@@ -121,7 +147,7 @@ namespace WindowsFormsApp
             }
             return isAdded;
         }
-        public static int Update(ProductItem param, int type)
+        protected static int Update(ProductItem param, int type)
         {
             var isAdded = 0;
             try
@@ -133,7 +159,6 @@ namespace WindowsFormsApp
                         conn.Open();
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@Id", param.Id);
-                        cmd.Parameters.AddWithValue("@status", param.Status);
                         cmd.Parameters.AddWithValue("@Name", param.Name);
                         cmd.Parameters.AddWithValue("@Barcode", param.Barcode);
                         cmd.Parameters.AddWithValue("@SalePrice", param.SalePrice);
@@ -151,12 +176,12 @@ namespace WindowsFormsApp
             }
             return isAdded;
         }
-        public static int Delete(int id,int type)
+        protected static int Delete(int id,int type)
         {
             var isAdded = 0;
             try
             {
-                DataTable dt = new DataTable("Category");
+                DataTable dt = new DataTable();
 
                 using (SqlConnection conn = new SqlConnection(connString))
                 {
@@ -165,7 +190,6 @@ namespace WindowsFormsApp
                         conn.Open();
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@id", id);
-                        cmd.Parameters.AddWithValue("@status", 0);
                         cmd.Parameters.AddWithValue("@Type", type);
                         isAdded = cmd.ExecuteNonQuery();
                     }

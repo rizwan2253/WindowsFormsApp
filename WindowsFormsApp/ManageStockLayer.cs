@@ -70,6 +70,27 @@ namespace WindowsFormsApp
         #endregion
 
         #region Product
+        public static List<ProductItem> GetProductItems(string id)
+        {
+            DataTable dt = Get(id, 9);
+            List<ProductItem> productItems = new List<ProductItem>();
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                ProductItem productItem = new ProductItem();
+                productItem.Id = Convert.ToInt32(dt.Rows[i]["Id"]);
+                productItem.Name = dt.Rows[i]["Name"].ToString();
+                productItem.Barcode = dt.Rows[i]["Barcode"].ToString();
+                productItem.SalePrice = Convert.ToInt32(dt.Rows[i]["SalePrice"]);
+                productItem.CostPrice = Convert.ToInt32(dt.Rows[i]["CostPrice"]);
+                productItem.categoryName = dt.Rows[i]["CategoryName"].ToString();
+                productItem.ManufacturerName = dt.Rows[i]["ManufacturerName"].ToString();
+                productItem.categoryId = Convert.ToInt32(dt.Rows[i]["CategoryId"]);
+                productItem.ManufacturerId = Convert.ToInt32(dt.Rows[i]["ManufacturerId"]);
+                productItems.Add(productItem);
+            }
+            return productItems;
+        }
         public static int AddProduct(ProductItem productItem)
         {
             return Add(productItem,10);
@@ -81,7 +102,7 @@ namespace WindowsFormsApp
 
         public static int RemoveProduct(int id)
         {
-            return Delete(id, 11);
+            return Delete(id, 12);
         }
         #endregion
         public static List<ProductItem> GetProductItems()
@@ -117,25 +138,7 @@ namespace WindowsFormsApp
             return productItems;
         }
 
-        public static List<ProductItem> GetProductItems(string id)
-        {
-            DataTable dt = Get(id, 9);
-            List<ProductItem> productItems = new List<ProductItem>();           
-
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                ProductItem productItem = new ProductItem();
-                productItem.Id = Convert.ToInt32(dt.Rows[i]["Id"]);
-                productItem.Name = dt.Rows[i]["Name"].ToString();
-                productItem.Barcode = dt.Rows[i]["Barcode"].ToString();
-                productItem.SalePrice = Convert.ToInt32(dt.Rows[i]["SalePrice"]);
-                productItem.CostPrice = Convert.ToInt32(dt.Rows[i]["CostPrice"]);
-                productItem.categoryName = dt.Rows[i]["CategoryName"].ToString();
-                productItem.ManufacturerName = dt.Rows[i]["ManufacturerName"].ToString();
-                productItems.Add(productItem);
-            }
-            return productItems;
-        }       
+        
     }
 
     public class Category : DataBaseAccess
@@ -146,7 +149,6 @@ namespace WindowsFormsApp
     public class ProductItem : DataBaseAccess
     {
         public string Barcode { get; set; }
-        public int Status { get; set; }
         public int SalePrice { get; set; }
         public int Quantity { get; set; }
         public int CostPrice { get; set; }
