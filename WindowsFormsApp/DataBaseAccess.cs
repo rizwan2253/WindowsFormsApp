@@ -109,6 +109,7 @@ namespace WindowsFormsApp
                         conn.Open();
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@CustomerId", param.CustomerId);
+                        cmd.Parameters.AddWithValue("@ProductId", param.Id);
                         cmd.Parameters.AddWithValue("@Quantity", param.Quantity);
                         cmd.Parameters.AddWithValue("@Type", type);
                         isAdded = cmd.ExecuteNonQuery();
@@ -202,6 +203,27 @@ namespace WindowsFormsApp
             return isAdded;
         }       
         
+        protected static DataTable Get(string UserName,string Password)
+        {
+            SqlDataAdapter da;
+            DataTable dt = new DataTable();
+
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                using (SqlCommand cmd = new SqlCommand("storeProcedure", conn))
+                {
+                    conn.Open();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@uName", UserName);
+                    cmd.Parameters.AddWithValue("@pass", Password);
+                    cmd.Parameters.AddWithValue("@Type", 15);
+                    da = new SqlDataAdapter(cmd);
+                    da.Fill(dt);
+                }
+            }
+
+            return dt;
+        }
         #endregion
 
     }

@@ -24,7 +24,8 @@ namespace WindowsFormsApp
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text == "admin" && textBox2.Text == "admin")
+            userLogin userLogin = new userLogin(textBox2.Text, textBox1.Text);
+            if (userLogin.ChechCredential())
             {
                 this.Hide();
                 
@@ -47,5 +48,48 @@ namespace WindowsFormsApp
         {            
             Application.Exit();
         }
+    }
+
+    public class userLogin:DataBaseAccess
+    {
+         //string UserName="";
+
+        //string Password="";
+
+        private string _userName;
+
+        public string UserName
+        {
+            get { return _userName; }
+            set { _userName = value; }
+        }
+
+        private string _password;
+
+        public string Password
+        {
+            get { return _password; }
+            set { _password = value; }
+        }
+
+
+        public userLogin(string userName,string password)
+        {
+            _userName = userName;
+            _password = password;
+
+        }
+
+        public bool ChechCredential()
+        {
+
+           var getCred = DataBaseAccess.Get(UserName, Password);
+            if (getCred != null && getCred.Rows.Count>0)
+            {
+                return true;
+            }           
+             return false;            
+        }
+
     }
 }

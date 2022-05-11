@@ -58,6 +58,7 @@
             this.txtSearchId = new System.Windows.Forms.TextBox();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
+            this.buttonReset = new System.Windows.Forms.Button();
             this.tabManageStock.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -293,9 +294,9 @@
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(301, 290);
+            this.btnUpdate.Location = new System.Drawing.Point(533, 132);
             this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(75, 23);
+            this.btnUpdate.Size = new System.Drawing.Size(147, 35);
             this.btnUpdate.TabIndex = 11;
             this.btnUpdate.Text = "Update";
             this.btnUpdate.UseVisualStyleBackColor = true;
@@ -303,9 +304,9 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(217, 290);
+            this.btnAdd.Location = new System.Drawing.Point(533, 89);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnAdd.Size = new System.Drawing.Size(147, 37);
             this.btnAdd.TabIndex = 10;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -316,15 +317,17 @@
             this.dtProductItem.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dtProductItem.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dtProductItem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtProductItem.Location = new System.Drawing.Point(25, 321);
+            this.dtProductItem.Location = new System.Drawing.Point(25, 289);
             this.dtProductItem.Name = "dtProductItem";
-            this.dtProductItem.Size = new System.Drawing.Size(677, 150);
+            this.dtProductItem.ReadOnly = true;
+            this.dtProductItem.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dtProductItem.Size = new System.Drawing.Size(677, 182);
             this.dtProductItem.TabIndex = 1;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(22, 292);
+            this.label7.Location = new System.Drawing.Point(530, 49);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(55, 13);
             this.label7.TabIndex = 2;
@@ -332,7 +335,7 @@
             // 
             // txtSearchId
             // 
-            this.txtSearchId.Location = new System.Drawing.Point(80, 290);
+            this.txtSearchId.Location = new System.Drawing.Point(533, 64);
             this.txtSearchId.Name = "txtSearchId";
             this.txtSearchId.Size = new System.Drawing.Size(64, 20);
             this.txtSearchId.TabIndex = 3;
@@ -342,9 +345,9 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(388, 290);
+            this.btnDelete.Location = new System.Drawing.Point(533, 174);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.Size = new System.Drawing.Size(147, 33);
             this.btnDelete.TabIndex = 14;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -353,19 +356,30 @@
             // btnSearch
             // 
             this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearch.Location = new System.Drawing.Point(153, 290);
+            this.btnSearch.Location = new System.Drawing.Point(603, 49);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(58, 23);
+            this.btnSearch.Size = new System.Drawing.Size(77, 36);
             this.btnSearch.TabIndex = 14;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // buttonReset
+            // 
+            this.buttonReset.Location = new System.Drawing.Point(533, 214);
+            this.buttonReset.Name = "buttonReset";
+            this.buttonReset.Size = new System.Drawing.Size(147, 40);
+            this.buttonReset.TabIndex = 15;
+            this.buttonReset.Text = "Reset";
+            this.buttonReset.UseVisualStyleBackColor = true;
+            this.buttonReset.Click += new System.EventHandler(this.buttonReset_Click);
             // 
             // ManageStock
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(714, 483);
+            this.Controls.Add(this.buttonReset);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.txtSearchId);
@@ -426,5 +440,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtboxManufacturer;
         private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.Button buttonReset;
     }
 }

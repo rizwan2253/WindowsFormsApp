@@ -11,7 +11,7 @@ namespace WindowsFormsApp
         
         public static int GetCustomerId()
         {
-            var a = Get("", type: 13);
+            var a = Get("", type: 14);
             if (a!=null && a.Rows.Count > 0)
             {
                 return Convert.ToInt32( a.Rows[0]["CustomerId"])+1;
@@ -21,7 +21,7 @@ namespace WindowsFormsApp
 
         public static int InsertCustomerDetail(CashCounterModel cashCounter)
         {
-            return Add(cashCounter, 14);
+            return Add(cashCounter, 13);
         }
     }
 

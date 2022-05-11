@@ -14,6 +14,8 @@ namespace WindowsFormsApp
 
         private void ManageStock_Load(object sender, EventArgs e)
         {
+            btnDelete.Enabled = false;
+            btnUpdate.Enabled = false;
             fillCategory();
             fillManufacturer();
             FillProductItem();
@@ -48,10 +50,10 @@ namespace WindowsFormsApp
                 if (isValidate())
                 {
                     var categoryId = comboBoxCategory.SelectedItem as Category;
-                    var manufactId  = comboBoxManufacturer.SelectedItem as Manufacturer;
+                    var manufactId = comboBoxManufacturer.SelectedItem as Manufacturer;
                     ProductItem item = new ProductItem();
                     item.Name = txtProductName.Text;
-                    item.Barcode = string.IsNullOrEmpty(txtBarcode.Text)?"": txtBarcode.Text;
+                    item.Barcode = string.IsNullOrEmpty(txtBarcode.Text) ? "" : txtBarcode.Text;
                     item.CostPrice = Convert.ToInt32(txtCostPrice.Text);
                     item.SalePrice = Convert.ToInt32(txtSalePrice.Text);
                     item.ManufacturerId = manufactId.Id;
@@ -62,13 +64,7 @@ namespace WindowsFormsApp
                     dtProductItem.Columns["CategoryId"].Visible = false;
                     dtProductItem.Columns["Quantity"].Visible = false;
                     dtProductItem.Columns["Status"].Visible = false;
-                    txtBarcode.Text = "";
-                    txtSalePrice.Text = "";
-                    txtCostPrice.Text = "";
-                    txtProductName.Text = "";
-                    comboBoxCategory.SelectedIndex = -1;
-                    comboBoxManufacturer.SelectedIndex = -1;
-
+                    ResetBoxes();
 
                 }
             }
@@ -93,6 +89,22 @@ namespace WindowsFormsApp
                     txtboxManufacturer.Focus();
                 }
             }
+        }
+
+        private void ResetBoxes()
+        {
+            txtBarcode.Text = "";
+            txtSalePrice.Text = "";
+            txtCostPrice.Text = "";
+            txtProductName.Text = "";
+            txtboxManufacturer.Text = "";
+            txtboxCategory.Text = "";
+            comboBoxCategory.SelectedIndex = -1;
+            comboBoxManufacturer.SelectedIndex = -1;
+            btnDelete.Enabled = false;
+            btnUpdate.Enabled = false;
+            btnAdd.Enabled = true;
+            txtSearchId.Text = "";
         }
 
         private bool isValidate()
@@ -149,6 +161,11 @@ namespace WindowsFormsApp
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+            if (id == 0)
+            {
+                MessageBox.Show("Select a record to update data");
+                return;
+            }
             if (tabManageStock.SelectedIndex == 0)
             {
                 if (isValidate())
@@ -172,12 +189,7 @@ namespace WindowsFormsApp
                     dtProductItem.Columns["CategoryId"].Visible = false;
                     dtProductItem.Columns["Quantity"].Visible = false;
                     dtProductItem.Columns["Status"].Visible = false;
-                    txtBarcode.Text = "";
-                    txtSalePrice.Text = "";
-                    txtCostPrice.Text = "";
-                    txtProductName.Text = "";
-                    comboBoxCategory.SelectedIndex = -1;
-                    comboBoxManufacturer.SelectedIndex = -1;
+                    ResetBoxes();
                 }
 
             }
@@ -190,6 +202,7 @@ namespace WindowsFormsApp
                     fillCategory();
                     txtboxCategory.Text = String.Empty;
                     txtboxCategory.Focus();
+                    ResetBoxes();
                 }
                 else if (CatAndManuf.SelectedIndex == 1)
                 {
@@ -198,12 +211,19 @@ namespace WindowsFormsApp
                     fillManufacturer();
                     txtboxManufacturer.Text = String.Empty;
                     txtboxManufacturer.Focus();
+                    ResetBoxes();
                 }
             }
         }
 
+
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            if (id==0)
+            {
+                MessageBox.Show("Select a record to remove data");
+                return;
+            }
             if (tabManageStock.SelectedIndex == 0)
             {
                 Message(ManageStockLayer.RemoveProduct(id), "deleted");
@@ -233,6 +253,7 @@ namespace WindowsFormsApp
 
                 }
             }
+            ResetBoxes();
         }
 
         private void txtSearchId_KeyDown(object sender, KeyEventArgs e)
@@ -254,9 +275,8 @@ namespace WindowsFormsApp
             if (tabManageStock.SelectedIndex == 0)
             {
                 var val = ManageStockLayer.GetProductItems(txtSearchId.Text);
-                if (val != null)
-                {
-                    
+                if (val != null && val.Count > 0)
+                {                    
                     var fetchVal = val.FirstOrDefault();
                     id = fetchVal.Id;
                     var a = ManageStockLayer.GetCategoryList(fetchVal.categoryId.ToString());
@@ -269,7 +289,15 @@ namespace WindowsFormsApp
                     comboBoxManufacturer.Text = b.FirstOrDefault().Name;
                     catId = fetchVal.categoryId;
                     ManufId = fetchVal.ManufacturerId;
+                    btnDelete.Enabled = true;
+                    btnUpdate.Enabled = true;
+                    txtSearchId.Text = "";
+                    btnAdd.Enabled = false;
 
+                }
+                else
+                {
+                    MessageBox.Show("Record not found");
                 }
 
             }
@@ -278,10 +306,21 @@ namespace WindowsFormsApp
                 if (CatAndManuf.SelectedIndex == 0)
                 {
                     var val = ManageStockLayer.GetCategoryList(txtSearchId.Text);
-                    dtProductItem.DataSource = val;
+                    if (val != null && val.Count > 0)
+                    {
+                        dtProductItem.DataSource = val;
                     txtboxCategory.Text = txtSearchId.Text != "" ? val.FirstOrDefault().Name : "";
                     txtSearchId.Text = "";
                     id = val.FirstOrDefault().Id;
+                    btnDelete.Enabled = true;
+                    btnUpdate.Enabled = true;
+                    txtSearchId.Text = "";
+                    btnAdd.Enabled = false;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Not found", "Result");
+                    }
                 }
                 else if (CatAndManuf.SelectedIndex == 1)
                 {
@@ -292,6 +331,10 @@ namespace WindowsFormsApp
                         txtboxManufacturer.Text =txtSearchId.Text != "" ? val.FirstOrDefault().Name : "";
                         txtSearchId.Text = "";
                         id = val.FirstOrDefault().Id;
+                        btnDelete.Enabled = true;
+                        btnUpdate.Enabled = true;
+                        txtSearchId.Text = "";
+                        btnAdd.Enabled = false;
                     }
                     else
                     {
@@ -301,6 +344,10 @@ namespace WindowsFormsApp
                     txtSearchId.Text = "";
                 }
             }
+            btnDelete.Enabled = true;
+            btnUpdate.Enabled = true;
+            txtSearchId.Text = "";
+            btnAdd.Enabled = false;
             txtSearchId.Focus();
         }
 
@@ -312,8 +359,11 @@ namespace WindowsFormsApp
 
         private void Message(int isAdded,string status)
         {
-            
-            if (isAdded > 0)
+            if (isAdded == -1)
+            {
+                MessageBox.Show("Name already exists", "Failed");
+            }
+            else if (isAdded > 0)
             {
                 MessageBox.Show("Data "+status+" successfully", "Success");
             }
@@ -321,6 +371,11 @@ namespace WindowsFormsApp
             {
                 MessageBox.Show("Something Wrong", "Failed");
             }
+        }
+
+        private void buttonReset_Click(object sender, EventArgs e)
+        {
+            ResetBoxes();
         }
 
         private void txtCostPrice_KeyPress(object sender, KeyPressEventArgs e)
