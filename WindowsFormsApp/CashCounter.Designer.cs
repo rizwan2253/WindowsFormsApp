@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CashCounter));
             this.dataGridViewCustomer = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtMobNo = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.btnAddDetail = new System.Windows.Forms.Button();
             this.textBoxQuantity = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -57,8 +58,6 @@
             this.printPreviewDialog = new System.Windows.Forms.PrintPreviewDialog();
             this.printDocument = new System.Drawing.Printing.PrintDocument();
             this.buttonRemove = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtMobNo = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCustomer)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -72,14 +71,6 @@
             this.dataGridViewCustomer.Location = new System.Drawing.Point(6, 19);
             this.dataGridViewCustomer.Name = "dataGridViewCustomer";
             this.dataGridViewCustomer.ReadOnly = true;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewCustomer.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewCustomer.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewCustomer.Size = new System.Drawing.Size(688, 147);
             this.dataGridViewCustomer.TabIndex = 1;
@@ -110,6 +101,25 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Item Detail";
+            // 
+            // txtMobNo
+            // 
+            this.txtMobNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMobNo.Location = new System.Drawing.Point(224, 23);
+            this.txtMobNo.Name = "txtMobNo";
+            this.txtMobNo.Size = new System.Drawing.Size(112, 26);
+            this.txtMobNo.TabIndex = 34;
+            this.txtMobNo.Text = "03233382253";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(159, 25);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(68, 20);
+            this.label4.TabIndex = 33;
+            this.label4.Text = "Mob.No.";
             // 
             // btnAddDetail
             // 
@@ -344,6 +354,7 @@
             this.printPreviewDialog.Name = "printPreviewDialog";
             this.printPreviewDialog.ShowIcon = false;
             this.printPreviewDialog.Visible = false;
+            this.printPreviewDialog.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.printPreviewDialog_FormClosing);
             // 
             // printDocument
             // 
@@ -359,25 +370,6 @@
             this.buttonRemove.Text = "Remove";
             this.buttonRemove.UseVisualStyleBackColor = true;
             this.buttonRemove.Click += new System.EventHandler(this.buttonRemove_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(159, 25);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(68, 20);
-            this.label4.TabIndex = 33;
-            this.label4.Text = "Mob.No.";
-            // 
-            // txtMobNo
-            // 
-            this.txtMobNo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMobNo.Location = new System.Drawing.Point(224, 23);
-            this.txtMobNo.Name = "txtMobNo";
-            this.txtMobNo.Size = new System.Drawing.Size(112, 26);
-            this.txtMobNo.TabIndex = 34;
-            this.txtMobNo.Text = "03233382253";
             // 
             // CashCounter
             // 

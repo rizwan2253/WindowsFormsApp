@@ -138,40 +138,44 @@ namespace WindowsFormsApp
 
         private void buttonSavePrint_Click(object sender, EventArgs e)
         {
-            if (productItems != null && productItems.Count == 0)
+            try
             {
-                MessageBox.Show("No record to save and print");
-                return;
+                if (productItems != null && productItems.Count == 0)
+                {
+                    MessageBox.Show("No record to save and print");
+                    return;
+                }
+
+                CashCounterModel cashCounter = new CashCounterModel();
+                var item = comboBoxItems.SelectedItem as ProductItem;
+
+                List<CashCounter> cc = new List<CashCounter>();
+                foreach (var item1 in productItems)
+                {
+                    CashCounterModel cashCounter1 = new CashCounterModel();
+                    cashCounter1.CustomerId = Convert.ToInt32(txtBoxCustomerId.Text);
+                    cashCounter1.Id = item1.Id;
+                    cashCounter1.Quantity = Convert.ToInt32(item1.Quantity);
+                    CashCounterLayer.InsertCustomerDetail(cashCounter1);
+                }
+
+                printPreviewDialog.Document = printDocument;
+                printDocument.DefaultPageSettings.PaperSize = new System.Drawing.Printing.PaperSize("pprnm", 285, 600);
+                printPreviewDialog.ShowDialog();
+                ClearFields();
+                TotalAmount.Text = "";
+                TotalQuantity.Text = "";
+
+                dataGridViewCustomer.DataSource = null;
+                txtBoxCustomerId.Text = CashCounterLayer.GetCustomerId().ToString();
+                txtMobNo.Text = "";
             }
-
-            CashCounterModel cashCounter = new CashCounterModel();
-            var item = comboBoxItems.SelectedItem as ProductItem;
-
-            List<CashCounter> cc = new List<CashCounter>();
-            foreach (var item1 in productItems)
+            catch (Exception ex)
             {
-                CashCounterModel cashCounter1 = new CashCounterModel();
-                cashCounter1.CustomerId = Convert.ToInt32(txtBoxCustomerId.Text);
-                cashCounter1.Id = item1.Id;
-                cashCounter1.Quantity = Convert.ToInt32(item1.Quantity);
-                CashCounterLayer.InsertCustomerDetail(cashCounter1);
-            }
+                MessageBox.Show(ex.Message);
 
-          
-            //cashCounter.CustomerId = Convert.ToInt32(txtBoxCustomerId.Text);
-            //cashCounter.Id = item.Id;
-            //cashCounter.Quantity = Convert.ToInt32(textBoxQuantity.Text);
-            //var a = CashCounterLayer.InsertCustomerDetail(cashCounter);
-            printPreviewDialog.Document = printDocument;
-            printDocument.DefaultPageSettings.PaperSize = new System.Drawing.Printing.PaperSize("pprnm", 285, 600);
-            printPreviewDialog.Show();
-            ClearFields();
-            TotalAmount.Text = "";
-            TotalQuantity.Text = "";
+            }
             
-            dataGridViewCustomer.DataSource = null;
-            txtBoxCustomerId.Text = CashCounterLayer.GetCustomerId().ToString();
-            txtMobNo.Text = "";
             
         }
 
@@ -185,8 +189,8 @@ namespace WindowsFormsApp
             e.Graphics.DrawString("__________________________________________", new Font("Arial",8, FontStyle.Regular),Brushes.Black,new Point(5,135));
             e.Graphics.DrawString("S.No", new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(10, 150));
             e.Graphics.DrawString("Name", new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(40, 150));
-            e.Graphics.DrawString("Quantity", new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(190, 150));
-            e.Graphics.DrawString("Price", new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(240, 150));
+            e.Graphics.DrawString("Quantity", new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(180, 150));
+            e.Graphics.DrawString("Price", new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(230, 150));
             e.Graphics.DrawString("__________________________________________", new Font("Arial",8, FontStyle.Regular),Brushes.Black,new Point(5,153));
             foreach (var item in productItems)
             {
@@ -194,13 +198,13 @@ namespace WindowsFormsApp
                 sno++;
                 e.Graphics.DrawString(sno.ToString(), new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(10, i+152));
                 e.Graphics.DrawString(item.Name, new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(40, i+152));
-                e.Graphics.DrawString(item.Quantity.ToString(), new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(195, i+152));
+                e.Graphics.DrawString(item.Quantity.ToString(), new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(185, i+152));
                 e.Graphics.DrawString(item.SalePrice.ToString(), new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(240, i+152));
             }
             e.Graphics.DrawString("__________________________________________", new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(5, i+160));
             e.Graphics.DrawString("Grand Total", new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(10, i+175));
-            e.Graphics.DrawString(productItems.Sum(x => x.Quantity).ToString(), new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(195, i+175));
-            e.Graphics.DrawString("Rs. "+productItems.Sum(x => x.SalePrice).ToString(), new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(240, i+175));
+            e.Graphics.DrawString(productItems.Sum(x => x.Quantity).ToString(), new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(185, i+175));
+            e.Graphics.DrawString("Rs. "+productItems.Sum(x => x.SalePrice).ToString(), new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(225, i+175));
             e.Graphics.DrawString("__________________________________________", new Font("Arial", 8, FontStyle.Regular), Brushes.Black, new Point(5, i+180));
             productItems.Clear();
             
@@ -217,6 +221,8 @@ namespace WindowsFormsApp
             if (e.KeyChar == (char)13)
             {
                 var selectedList = products.Where(a => a.Barcode == textBoxBarcode.Text);
+                if (selectedList != null && selectedList.Count() > 0)
+                {                
                 var m = ManageStockLayer.GetManufacturerList(selectedList.FirstOrDefault().ManufacturerId.ToString());
                 var c = ManageStockLayer.GetCategoryList(selectedList.FirstOrDefault().categoryId.ToString());
                 textBoxManufacturer.Text = m.FirstOrDefault().Name;
@@ -224,6 +230,12 @@ namespace WindowsFormsApp
                 comboBoxItems.Text = selectedList.FirstOrDefault().Name;
                 textBoxSalePrice.Text = selectedList.FirstOrDefault().SalePrice.ToString();;
                 textBoxQuantity.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("No record against this barcode " + textBoxBarcode.Text);
+                    return;
+                }
             }
             if (selectedItem != null)
             {
@@ -259,6 +271,11 @@ namespace WindowsFormsApp
             {
                 e.Handled = true;
             }
+        }
+
+        private void printPreviewDialog_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            
         }
     }
 }

@@ -16,7 +16,7 @@ namespace WindowsFormsApp
             {
                 return Convert.ToInt32( a.Rows[0]["CustomerId"])+1;
             }
-            return 0001;
+            return 1001;
         }
 
         public static int InsertCustomerDetail(CashCounterModel cashCounter)

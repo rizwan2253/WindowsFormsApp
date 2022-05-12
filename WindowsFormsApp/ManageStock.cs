@@ -47,7 +47,7 @@ namespace WindowsFormsApp
         {
             if (tabManageStock.SelectedIndex == 0)
             {
-                if (isValidate())
+                if (isValidate(3))
                 {
                     var categoryId = comboBoxCategory.SelectedItem as Category;
                     var manufactId = comboBoxManufacturer.SelectedItem as Manufacturer;
@@ -72,21 +72,25 @@ namespace WindowsFormsApp
             {
                 if (CatAndManuf.SelectedIndex == 0)
                 {
-                  Message(ManageStockLayer.AddCategory(txtboxCategory.Text),"added");
-                    
-                    dtProductItem.DataSource = ManageStockLayer.GetCategoryList("0");
-                    fillCategory();
-                    txtboxCategory.Text = String.Empty;
-                    txtboxCategory.Focus();
-
+                    if (isValidate(1))
+                    {
+                        Message(ManageStockLayer.AddCategory(txtboxCategory.Text), "added");
+                        dtProductItem.DataSource = ManageStockLayer.GetCategoryList("0");
+                        fillCategory();
+                        txtboxCategory.Text = String.Empty;
+                        txtboxCategory.Focus();
+                    }
                 }
                 else if (CatAndManuf.SelectedIndex == 1)
                 {
-                  Message(ManageStockLayer.AddManufacturer(txtboxManufacturer.Text),"added");                   
-                    dtProductItem.DataSource = ManageStockLayer.GetManufacturerList("0");
-                    fillManufacturer();
-                    txtboxManufacturer.Text = String.Empty;
-                    txtboxManufacturer.Focus();
+                    if (isValidate(2))
+                    {
+                        Message(ManageStockLayer.AddManufacturer(txtboxManufacturer.Text), "added");
+                        dtProductItem.DataSource = ManageStockLayer.GetManufacturerList("0");
+                        fillManufacturer();
+                        txtboxManufacturer.Text = String.Empty;
+                        txtboxManufacturer.Focus();
+                    }
                 }
             }
         }
@@ -107,24 +111,44 @@ namespace WindowsFormsApp
             txtSearchId.Text = "";
         }
 
-        private bool isValidate()
+        private bool isValidate(int i)
         {
-            if (string.IsNullOrEmpty(txtProductName.Text))
+            if(i==1)
             {
-                MessageBox.Show("Enter product name");
-                return false;
+                
+                if (string.IsNullOrEmpty(txtboxCategory.Text))
+                {
+                    MessageBox.Show("Enter Category name");
+                    return false;
+                }
             }
-            if (string.IsNullOrEmpty(txtCostPrice.Text))
+            else if (i==2)
             {
-                MessageBox.Show("Enter Cost Price");
-                return false;
+                
+                if (string.IsNullOrEmpty(txtboxManufacturer.Text))
+                {
+                    MessageBox.Show("Enter Manufacturer name");
+                    return false;
+                }
             }
-            if (string.IsNullOrEmpty(txtSalePrice.Text))
+            else if (i == 3)
+            {            
+                if (string.IsNullOrEmpty(txtProductName.Text))
+                {
+                    MessageBox.Show("Enter product name");
+                    return false;
+                }
+                if (string.IsNullOrEmpty(txtCostPrice.Text))
+                {
+                    MessageBox.Show("Enter Cost Price");
+                    return false;
+                }
+                if (string.IsNullOrEmpty(txtSalePrice.Text))
             {
                 MessageBox.Show("Enter Sale Price");
                 return false;
             }
-
+            }
             return true;
         }
 
@@ -168,7 +192,7 @@ namespace WindowsFormsApp
             }
             if (tabManageStock.SelectedIndex == 0)
             {
-                if (isValidate())
+                if (isValidate(3))
                 {
                     var categoryId = comboBoxCategory.SelectedItem as Category;
                     var manufactId  = comboBoxManufacturer.SelectedItem as Manufacturer;
@@ -197,21 +221,27 @@ namespace WindowsFormsApp
             {
                 if (CatAndManuf.SelectedIndex == 0)
                 {
-                    Message(ManageStockLayer.EditCategory(id,txtboxCategory.Text),"updated");
-                    dtProductItem.DataSource = ManageStockLayer.GetCategoryList("0");
-                    fillCategory();
-                    txtboxCategory.Text = String.Empty;
-                    txtboxCategory.Focus();
-                    ResetBoxes();
+                    if (isValidate(1))
+                    {
+                        Message(ManageStockLayer.EditCategory(id, txtboxCategory.Text), "updated");
+                        dtProductItem.DataSource = ManageStockLayer.GetCategoryList("0");
+                        fillCategory();
+                        txtboxCategory.Text = String.Empty;
+                        txtboxCategory.Focus();
+                        ResetBoxes();
+                    }
                 }
                 else if (CatAndManuf.SelectedIndex == 1)
                 {
-                    Message(ManageStockLayer.EditManufacturer(id,txtboxManufacturer.Text),"updated");
-                    dtProductItem.DataSource = ManageStockLayer.GetManufacturerList("0");
-                    fillManufacturer();
-                    txtboxManufacturer.Text = String.Empty;
-                    txtboxManufacturer.Focus();
-                    ResetBoxes();
+                    if (isValidate(2))
+                    {
+                        Message(ManageStockLayer.EditManufacturer(id, txtboxManufacturer.Text), "updated");
+                        dtProductItem.DataSource = ManageStockLayer.GetManufacturerList("0");
+                        fillManufacturer();
+                        txtboxManufacturer.Text = String.Empty;
+                        txtboxManufacturer.Focus();
+                        ResetBoxes();
+                     }
                 }
             }
         }
